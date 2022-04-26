@@ -12,4 +12,5 @@ img.bigcoin {
 
 img.smallcoin {
   width: 50px;
+  display: none;
 }
