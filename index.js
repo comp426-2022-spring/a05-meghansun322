@@ -1,6 +1,5 @@
 // Place your server entry point code here
 const express = require("express");
-const morgan = require("morgan");
 const cors = require("cors");
 
 const app = express();
@@ -8,7 +7,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 //Require database SCRIPT file
-var db = require("database");
+var db = require("./src/services/database");
 
 const args = require("minimist")(process.argv.slice(2));
 
