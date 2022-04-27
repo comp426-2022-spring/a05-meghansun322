@@ -4,15 +4,12 @@ const cors = require("cors");
 var bodyParser = require("body-parser");
 
 const app = express();
-// Make Express use its own built-in body parser to handle JSON
-app.use(express.json());
+app.use(cors());
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 
 // parse application/json
-app.use(bodyParser.json());
-
-app.use(cors());
+app.use(express.json());
 //Require database SCRIPT file
 var db = require("./src/services/database");
 
