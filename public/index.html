@@ -30,7 +30,7 @@
       <button id="homenav" onclick="show('home')">Home</button>
       <button id="singlenav" onclick="show('singleFlip')">Flip one coin</button>
       <button id="multinav" onclick="show('multiFlip')">Flip multiple coins</button>
-      <button id="guessnav" onclick="show('guess')">Guess the result</button>
+      <button id="guessnav" onclick="show('guessAndFlip')">Guess the result</button>
     </nav>
 
   
@@ -43,8 +43,8 @@
     <div id="singleFlip" class="hidden">
       <h1>Flip A Coin!</h1>
       <button id="singleFlipButton">Flip one coin</button>
-      <h2 id="singleCoinResult" class="hidden"></h2>
       <img id="singleCoin" class="smallcoin" src="/a05-meghansun322/public/assets/img/coin.png"> 
+      <h2 id="singleCoinResult" class="hidden"></h2>
     </div>
 
     <!-- Multiple Coins -->
@@ -74,8 +74,12 @@
           <h2 id="multiFlipResult"></h2>
         
     </div>
-    <div id="guess" class="hidden">
-      
+    <div id="guessAndFlip" class="hidden">
+      <h2>Guess Heads or Tails?</h2>
+      <form id="guessForm">
+        <input type="text" name="call" id="guess">
+        <input type="submit" value="Call">
+      </form>
     </div>
 	<script src="main.js"></script>
   </body>

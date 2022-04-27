@@ -9,7 +9,7 @@ function show(id) {
   document.getElementById("home").style = "none";
   document.getElementById("singleFlip").style = "none";
   document.getElementById("multiFlip").style = "none";
-  document.getElementById("guess").style = "none";
+  document.getElementById("guessAndFlip").style = "none";
   // Displays
   var x = document.getElementById(id);
   x.style.display = "block";
@@ -88,18 +88,57 @@ async function flipCoins(event) {
       document.getElementById("multiFlipResult").innerHTML =
         "Heads: " + summary.heads + "  | Tails: " + summary.tails;
     });
-  // try {
-  //   const formData = new FormData(formEvent);
-  //   const flips = await sendFlips({ url, formData });
+}
+// Guess a flip by clicking either heads or tails button
+// const guess = document.getElementById("guessForm");
 
-  //   console.log(flips);
-  //   document.getElementById("heads").innerHTML =
-  //     "Heads: " + flips.summary.heads;
-  //   document.getElementById("tails").innerHTML =
-  //     "Tails: " + flips.summary.tails;
-  // } catch (error) {
-  //   console.log(error);
-  // }
+// guess.addEventListener("submit", callAndFlip);
+
+// function callAndFlip(event) {
+//   event.preventDefault();
+
+//   const formEvent = event.currentTarget;
+//   const formData = new FormData(formEvent);
+//   const plainFormData = Object.fromEntries(formData.entries());
+//   const call = plainFormData.call;
+//   var requestURL = "http://localhost:5000/app/flip/call/";
+//   fetch(requestURL, {
+//     method: "POST",
+//     mode: "cors",
+//     body: call,
+//   })
+//     .then(function (response) {
+//       return response.json();
+//     })
+//     .then(function (result) {
+//       console.log(result);
+//     });
+// }
+
+// Our flip many coins form
+const coins = document.getElementById("guessForm");
+// Add event listener for coins form
+coins.addEventListener("submit", callAndFlip);
+// Create the submit handler
+async function callAndFlip(event) {
+  event.preventDefault();
+
+  const url = "http://localhost:5000/app/flip/call/";
+
+  const formEvent = event.currentTarget;
+
+  try {
+    const formData = new FormData(formEvent);
+    const flips = await sendFlips({ url, formData });
+
+    console.log(flips);
+    document.getElementById("heads").innerHTML =
+      "Heads: " + flips.summary.heads;
+    document.getElementById("tails").innerHTML =
+      "Tails: " + flips.summary.tails;
+  } catch (error) {
+    console.log(error);
+  }
 }
 // Create a data sender
 async function sendFlips({ url, formData }) {
@@ -119,4 +158,3 @@ async function sendFlips({ url, formData }) {
   const response = await fetch(url, options);
   return response.json();
 }
-// Guess a flip by clicking either heads or tails button

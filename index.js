@@ -1,10 +1,17 @@
 // Place your server entry point code here
 const express = require("express");
 const cors = require("cors");
+var bodyParser = require("body-parser");
 
 const app = express();
 // Make Express use its own built-in body parser to handle JSON
 app.use(express.json());
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// parse application/json
+app.use(bodyParser.json());
+
 app.use(cors());
 //Require database SCRIPT file
 var db = require("./src/services/database");
@@ -62,8 +69,9 @@ function countFlips(array) {
 }
 
 function flipACoin(call) {
+  console.log("call", call);
   var return_statement = {
-    call,
+    call: call,
     flip: coinFlip(),
     result: "",
   };
