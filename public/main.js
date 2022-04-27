@@ -1,9 +1,23 @@
 // Focus div based on nav button click
+const homeNav = document.getElementById("home");
+const singleNav = document.getElementById("singlenav");
+const multipleNav = document.getElementById("multiplenav");
+const guessNav = document.getElementById("guessnav");
 
+function show(id) {
+  // Resets
+  document.getElementById("home").style = "none";
+  document.getElementById("singleFlip").style = "none";
+  document.getElementById("multiFlip").style = "none";
+  document.getElementById("guess").style = "none";
+  // Displays
+  var x = document.getElementById(id);
+  x.style.display = "block";
+}
 // Flip one coin and show coin image to match result when button clicked
 
 // Button coin flip element
-const coin = document.getElementById("coin");
+const coin = document.getElementById("singleFlipButton");
 // Add event listener for coin button
 coin.addEventListener("click", flipCoin);
 function flipCoin() {
@@ -13,8 +27,8 @@ function flipCoin() {
     })
     .then(function (result) {
       console.log(result);
-      document.getElementById("coinResult").innerHTML = result.flip;
-      document.getElementById("coinResult").style.display = "block";
+      document.getElementById("singleCoinResult").innerHTML = result.flip;
+      document.getElementById("singleCoinResult").style.display = "block";
       document.getElementById("singleCoin").style.display = "block";
       document
         .getElementById("singleCoin")
