@@ -69,9 +69,11 @@ async function flipCoins(event) {
     })
     .then(function (result) {
       console.log(result);
-      document.getElementById("multiResult").innerHTML = result.raw;
+      // document.getElementById("multiResult").innerHTML = result.raw;
       const results = result.raw;
+      const summary = result.summary;
       console.log(results);
+      console.log(JSON.stringify(summary));
       let i = 0;
       while (i < results.length) {
         document
@@ -83,7 +85,8 @@ async function flipCoins(event) {
         document.getElementById("coinImage" + i).style.display = "block";
         i = i + 1;
       }
-      document.getElementById("multiResult").style.display = "block";
+      document.getElementById("multiFlipResult").innerHTML =
+        "Heads: " + summary.heads + "  | Tails: " + summary.tails;
     });
   // try {
   //   const formData = new FormData(formEvent);

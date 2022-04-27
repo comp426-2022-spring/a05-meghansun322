@@ -14,3 +14,9 @@ img.smallcoin {
   width: 50px;
   display: none;
 }
+
+.coins-container{
+  padding-top: 20px;
+  display: flex;
+}
+
