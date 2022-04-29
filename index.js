@@ -32,7 +32,6 @@ app.use(express.json());
 var db = require("./src/services/database.js");
 
 // Log arg
-
 if (args.log == true) {
   const WRITESTREAM = fs.createWriteStream("access.log", { flags: "a" });
   app.use(morgan("combined", { stream: WRITESTREAM }));
@@ -41,7 +40,6 @@ if (args.log == true) {
 }
 
 // DEBUG arg
-
 if (args.debug === true) {
   // Returns all records on access log
   console.log("Create endpoint /app/log/access/");
@@ -55,6 +53,7 @@ if (args.debug === true) {
 } else {
   console.log("Debug is False");
 }
+
 // CLI arg
 const port = args.port || process.env.PORT || 5000;
 
@@ -73,7 +72,7 @@ if (args.log == "false") {
   app.use(morgan("combined", { stream: accessLog }));
 }
 
-// MIDDLEWARE
+// MIDDLEWARE for database
 app.use((req, res, next) => {
   let logdata = {
     remoteaddr: req.ip,
@@ -109,6 +108,7 @@ app.use((req, res, next) => {
 // Serve static HTML files
 app.use(express.static("./public"));
 
+// FUNCTIONS
 function coinFlip() {
   var result;
   var rand_num = Math.random();
@@ -169,6 +169,8 @@ function flipACoin(call) {
   }
   return return_statement;
 }
+
+//ENDPOINTS
 
 // READ (HTTP method GET) at root endpoint /app/
 app.get("/app/", (req, res, next) => {
