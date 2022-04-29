@@ -109,9 +109,6 @@ async function callAndFlip(event) {
     document.getElementById("call").innerHTML = "Call: " + flips.call;
     document.getElementById("theFlip").innerHTML = "Flip: " + flips.flip;
     document.getElementById("theResult").innerHTML = "Result: " + flips.result;
-    //   "Heads: " + flips.summary.heads;
-    // document.getElementById("tails").innerHTML =
-    //   "Tails: " + flips.summary.tails;
   } catch (error) {
     console.log(error);
   }
