@@ -38,6 +38,5 @@ if (!row) {
   // Since the database already exists, scho that ot ehco that to the console.
   console.log("Database exists.");
 }
-
 // Export all of the above as module so that we can use it elsewhere.
 module.exports = db;
