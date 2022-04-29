@@ -21,7 +21,9 @@ const coin = document.getElementById("singleFlipButton");
 // Add event listener for coin button
 coin.addEventListener("click", flipCoin);
 function flipCoin() {
-  fetch("http://localhost:5000/app/flip/", { mode: "cors" })
+  const endpoint = "app/flip/";
+  const url = document.baseURI + endpoint;
+  fetch(url, { mode: "cors" })
     .then(function (response) {
       return response.json();
     })
@@ -32,7 +34,7 @@ function flipCoin() {
       document.getElementById("singleCoin").style.display = "block";
       document
         .getElementById("singleCoin")
-        .setAttribute("src", "/public/assets/img/" + result.flip + ".png");
+        .setAttribute("src", "/assets/img/" + result.flip + ".png");
       console.log("");
       // coin.disabled = true;
     });
@@ -57,7 +59,9 @@ async function flipCoins(event) {
   const formData = new FormData(formEvent);
   const plainFormData = Object.fromEntries(formData.entries());
   console.log(plainFormData.number);
-  var requestURL = "http://localhost:5000/app/flips/" + plainFormData.number;
+  const endpoint = "app/flips/";
+  const url = document.baseURI + endpoint;
+  var requestURL = url + plainFormData.number;
   fetch(requestURL, {
     mode: "cors",
   })
@@ -75,7 +79,7 @@ async function flipCoins(event) {
       while (i < results.length) {
         document
           .getElementById("coinImage" + i)
-          .setAttribute("src", "/public/assets/img/" + results[i] + ".png");
+          .setAttribute("src", "/assets/img/" + results[i] + ".png");
         document.getElementById("coinImage" + i).style.display = "block";
         i = i + 1;
       }
