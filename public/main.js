@@ -94,7 +94,9 @@ guessTails.addEventListener("submit", callAndFlip);
 async function callAndFlip(event) {
   event.preventDefault();
   const call = event.currentTarget.innerHTML;
-  const url = "http://localhost:5000/app/flip/call/";
+  const endpoint = "app/flip/call/";
+  const url = document.baseURI + endpoint;
+  console.log("url", url);
 
   try {
     const flips = await sendFlips({ url, call });

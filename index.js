@@ -84,12 +84,12 @@ app.use((req, res, next) => {
     protocol: req.protocol,
     httpversion: req.httpVersion,
     status: res.statusCode,
-    referer: req.headers["referer"],
+    referrer: req.headers["referrer"],
     useragent: req.headers["user-agent"],
   };
 
   const stmt = db.prepare(
-    "INSERT INTO accesslog (remoteaddr, remoteuser, time, method, url, protocol, httpversion, status, referer, useragent) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+    "INSERT INTO accesslog (remoteaddr, remoteuser, time, method, url, protocol, httpversion, status, referrer, useragent) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
   );
   const info = stmt.run(
     logdata.remoteaddr,
@@ -100,7 +100,7 @@ app.use((req, res, next) => {
     logdata.protocol,
     logdata.httpversion,
     logdata.status,
-    logdata.referer,
+    logdata.referrer,
     logdata.useragent
   );
   next();
@@ -170,9 +170,10 @@ function flipACoin(call) {
   return return_statement;
 }
 
-app.get("/app", (req, res) => {
-  res.status(200).end("OK");
-  res.type("text/plain");
+// READ (HTTP method GET) at root endpoint /app/
+app.get("/app/", (req, res, next) => {
+  res.json({ message: "Your API works! (200)" });
+  res.status(200);
 });
 
 app.get("/app/echo/:number", (req, res) => {
