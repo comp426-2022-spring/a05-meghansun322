@@ -1,21 +1,52 @@
 // Place your server entry point code here
-const express = require("express");
-const cors = require("cors");
-var bodyParser = require("body-parser");
-
-const app = express();
-app.use(cors());
-// parse application/x-www-form-urlencoded
-app.use(express.urlencoded({ extended: true }));
-
-// parse application/json
-app.use(express.json());
-//Require database SCRIPT file
-var db = require("./src/services/database");
-
 const args = require("minimist")(process.argv.slice(2));
 
+const help = `
+server.js [options]
+--port, -p	Set the port number for the server to listen on. Must be an integer
+            between 1 and 65535.
+--debug, -d If set to true, creates endlpoints /app/log/access/ which returns
+            a JSON access log from the database and /app/error which throws 
+            an error with the message "Error test successful." Defaults to 
+            false.
+--log		If set to false, no log files are written. Defaults to true.
+            Logs are always written to database.
+--help, -h	Return this message and exit.
+`;
+// If --help, echo help text and exit
+if (args.help || args.h) {
+  console.log(help);
+  process.exit(0);
+}
+
+const express = require("express");
+const fs = require("fs");
+const morgan = require("morgan");
+const app = express();
+
+// Body parse
+app.use(express.json());
+
+//Require database SCRIPT file
+var db = require("./src/services/database.js");
+
+// CLI arg
 const port = args.port || process.env.PORT || 5000;
+
+if (args.log == "false") {
+  console.log("NOTICE: not creating file access.log");
+} else {
+  // Use morgan for logging to files
+  const logdir = "./log/";
+
+  if (!fs.existsSync(logdir)) {
+    fs.mkdirSync(logdir);
+  }
+  // Create a write stream to append to an access.log file
+  const accessLog = fs.createWriteStream(logdir + "access.log", { flags: "a" });
+  // Set up the access logging middleware
+  app.use(morgan("combined", { stream: accessLog }));
+}
 
 // Serve static HTML files
 app.use(express.static("./public"));
