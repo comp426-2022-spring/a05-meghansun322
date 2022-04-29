@@ -4,6 +4,7 @@ const singleNav = document.getElementById("singlenav");
 const multipleNav = document.getElementById("multiplenav");
 const guessNav = document.getElementById("guessnav");
 
+// displays text for each function
 function show(id) {
   // Resets
   document.getElementById("home").style = "none";
