@@ -71,7 +71,6 @@ async function flipCoins(event) {
     })
     .then(function (result) {
       console.log(result);
-      // document.getElementById("multiResult").innerHTML = result.raw;
       const results = result.raw;
       const summary = result.summary;
       console.log(results);
@@ -105,7 +104,6 @@ async function callAndFlip(event) {
 
   try {
     const flips = await sendFlips({ url, call });
-
     console.log("flips", flips);
     document.getElementById("call").innerHTML = "Call: " + flips.call;
     document.getElementById("theFlip").innerHTML = "Flip: " + flips.flip;
