@@ -176,10 +176,6 @@ app.get("/app/", (req, res, next) => {
   res.status(200);
 });
 
-app.get("/app/echo/:number", (req, res) => {
-  res.status(200).json({ message: req.params.number });
-  res.type("text/plain");
-});
 // Put listen at the end
 app.get("/app/flip", (req, res) => {
   var flip = coinFlip();
