@@ -2,10 +2,10 @@
 // require better-sqlite
 const Database = require("better-sqlite3");
 // connect to a database or create one if it doesn't exist yet
-const db = new Database("../data/db/log.db");
+const db = new Database("./data/db/log.db");
 // Is the database initialized or do we need to intnialize it?
 const stmt = db.prepare(
-  `SELECT name FROM sqlite_master WHERE type='table' and name='userinfo';`
+  `SELECT name FROM sqlite_master WHERE type='table' and name='accesslog';`
 );
 let row = stmt.get();
 console.log(row);
