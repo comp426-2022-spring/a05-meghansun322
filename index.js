@@ -22,8 +22,10 @@ if (args.help || args.h) {
 const express = require("express");
 const fs = require("fs");
 const morgan = require("morgan");
+const cors = require("cors");
 const app = express();
 app.use(morgan("tiny"));
+app.use(cors());
 app.use(express.json());
 
 //Require database SCRIPT file
@@ -168,10 +170,6 @@ function flipACoin(call) {
   return return_statement;
 }
 
-const server = app.listen(port, () => {
-  console.log(`App is running on port ${port}`);
-});
-
 app.get("/app", (req, res) => {
   res.status(200).end("OK");
   res.type("text/plain");
@@ -209,4 +207,15 @@ app.post("/app/flip/call/", (req, res, next) => {
 app.use(function (req, res) {
   res.status(404).end("404 NOT FOUND");
   res.type("text/plain");
+});
+
+const server = app.listen(port, () => {
+  console.log(`App is running on port ${port}`);
+});
+
+// Tell STDOUT that the server is stopped
+process.on("SIGINT", () => {
+  server.close(() => {
+    console.log("\nApp stopped.");
+  });
 });
