@@ -23,13 +23,36 @@ const express = require("express");
 const fs = require("fs");
 const morgan = require("morgan");
 const app = express();
-
-// Body parse
+app.use(morgan("tiny"));
 app.use(express.json());
 
 //Require database SCRIPT file
 var db = require("./src/services/database.js");
 
+// Log arg
+
+if (args.log == true) {
+  const WRITESTREAM = fs.createWriteStream("access.log", { flags: "a" });
+  app.use(morgan("combined", { stream: WRITESTREAM }));
+} else {
+  console.log("Server Is Not Creating a Log File.");
+}
+
+// DEBUG arg
+
+if (args.debug === true) {
+  // Returns all records on access log
+  console.log("Create endpoint /app/log/access/");
+  app.get("/app/log/access/", (req, res) => {
+    const stmt = db.prepare("SELECT * FROM accesslog").all();
+    res.status(200).send(stmt);
+  });
+  app.get("/app/error", (req, res) => {
+    throw new Error("Error Test Successful.");
+  });
+} else {
+  console.log("Debug is False");
+}
 // CLI arg
 const port = args.port || process.env.PORT || 5000;
 
@@ -37,7 +60,7 @@ if (args.log == "false") {
   console.log("NOTICE: not creating file access.log");
 } else {
   // Use morgan for logging to files
-  const logdir = "./log/";
+  const logdir = "./data/log/";
 
   if (!fs.existsSync(logdir)) {
     fs.mkdirSync(logdir);
@@ -47,6 +70,39 @@ if (args.log == "false") {
   // Set up the access logging middleware
   app.use(morgan("combined", { stream: accessLog }));
 }
+
+// MIDDLEWARE
+app.use((req, res, next) => {
+  let logdata = {
+    remoteaddr: req.ip,
+    remoteuser: req.user,
+    time: Date.now(),
+    method: req.method,
+    url: req.url,
+    protocol: req.protocol,
+    httpversion: req.httpVersion,
+    status: res.statusCode,
+    referer: req.headers["referer"],
+    useragent: req.headers["user-agent"],
+  };
+
+  const stmt = db.prepare(
+    "INSERT INTO accesslog (remoteaddr, remoteuser, time, method, url, protocol, httpversion, status, referer, useragent) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+  );
+  const info = stmt.run(
+    logdata.remoteaddr,
+    logdata.remoteuser,
+    logdata.time,
+    logdata.method,
+    logdata.url,
+    logdata.protocol,
+    logdata.httpversion,
+    logdata.status,
+    logdata.referer,
+    logdata.useragent
+  );
+  next();
+});
 
 // Serve static HTML files
 app.use(express.static("./public"));
