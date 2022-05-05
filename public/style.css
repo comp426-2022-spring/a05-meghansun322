@@ -11,5 +11,14 @@ img.bigcoin {
 }
 
 img.smallcoin {
+  padding-top: 20px;
+  padding-right: 15px;
   width: 50px;
+  display: none;
 }
+
+.coins-container{
+ 
+  display: flex;
+}
+

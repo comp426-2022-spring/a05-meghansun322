@@ -27,22 +27,65 @@
   </head>
   <body>
     <nav>
-      <button id="homenav">Home</button>
-      <button id="singlenav">Flip one coin</button>
-      <button id="multinav">Flip multiple coins</button>
-      <button id="guessnav">Guess the result</button>
+      <button id="homenav" onclick="show('home')">Home</button>
+      <button id="singlenav" onclick="show('singleFlip')">Flip one coin</button>
+      <button id="multinav" onclick="show('multiFlip')">Flip multiple coins</button>
+      <button id="guessnav" onclick="show('guessAndFlip')">Guess the result</button>
     </nav>
-    <div id="home">
-      
-    </div>    
-    <div id="single" class="hidden">
-      
+
+  
+
+    <div id="home" class="hidden">
+      This is Coinserver! Navigate the top navbar to flip coins!
     </div>
-    <div id="multi" class="hidden">
-      
+    
+    
+    
+    <!-- Single Coins -->
+    <div id="singleFlip" class="hidden">
+      <h1>Flip A Coin!</h1>
+      <button id="singleFlipButton">Flip one coin</button>
+      <img id="singleCoin" class="smallcoin" src="/assets/img/coin.png"> 
+      <h2 id="singleCoinResult" class="hidden"></h2>
     </div>
-    <div id="guess" class="hidden">
-      
+
+    <!-- Multiple Coins -->
+    <div id="multiFlip" class="hidden">
+        <h1>Flip many coins</h1>
+          <form id="coins">
+            <label for="number">
+              <strong>How many coins?</strong>
+            </label>
+            <input type="number" name="number" id="number">
+            <input type="submit" value="Flip multiple coins">
+          </form>
+    
+        <div class="coins-container">
+            <img id="coinImage0" class="smallcoin" src="/assets/img/coin.png">
+            <img id="coinImage1" class="smallcoin" src="/assets/img/coin.png">
+            <img id="coinImage2" class="smallcoin" src="assets/img/coin.png">
+            <img id="coinImage3" class="smallcoin" src="/assets/img/coin.png">
+            <img id="coinImage4" class="smallcoin" src="/assets/img/coin.png">
+            <img id="coinImage5" class="smallcoin" src="/assets/img/coin.png">
+            <img id="coinImage6" class="smallcoin" src="/assets/img/coin.png">
+            <img id="coinImage7" class="smallcoin" src="/assets/img/coin.png">
+            <img id="coinImage8" class="smallcoin" src="/assets/img/coin.png">
+            <img id="coinImage9" class="smallcoin" src="/assets/img/coin.png"> 
+        </div>
+
+          <h2 id="multiFlipResult"></h2>
+        
+    </div>
+    <div id="guessAndFlip" class="hidden">
+      <h2>Guess Heads or Tails?</h2>
+        <button onclick="callAndFlip(event)" id="guessHeads" >heads</button>
+        <button onclick="callAndFlip(event)" id="guessTails" >tails</button>
+        <h2 id="guessResults">
+          <div id="call"></div>
+          <div id="theFlip"> </div>
+          <div id="theResult"></div>
+        </h2>
+    
     </div>
 	<script src="main.js"></script>
   </body>
